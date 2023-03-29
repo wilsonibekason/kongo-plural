@@ -60,12 +60,14 @@ main {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: stretch;
+  row-gap: 1rem;
 
 }
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: .3rem;
+  cursor: pointer;
 }
 
 .card__header,
@@ -111,4 +113,8 @@ main {
 .btn:active {
   background-color: #00695c;
   color: white;
+}
+
+main {
+  margin-top: 5rem
 }

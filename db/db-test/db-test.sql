@@ -78,3 +78,5 @@ values (100, "rice", 4.00),
     (150, 'unicorn', 2.99) --  update table column
 ALTER TABLE products
 MODIFY price DECIMAL(4, 2) NOT NULL
+ALTER TABLE employeess
+MODIFY TABLE 

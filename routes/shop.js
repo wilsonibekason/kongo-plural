@@ -3,7 +3,12 @@ const path = require("path");
 
 const router = express.Router();
 const rootDir = require("../util/pathz");
-const { fetchProducts } = require("../controllers/products");
+const {
+  fetchProducts,
+  getIndex,
+  getCart,
+  getCheckout,
+} = require("../controllers/products");
 const HTML = `<!DOCTYPE html>
 <html>
   <head>
@@ -58,6 +63,12 @@ const HTML = `<!DOCTYPE html>
 </html>
 `;
 
-router.get("/", fetchProducts);
+router.get("/", getIndex);
+
+router.get("/products", fetchProducts);
+
+router.get("/cart", getCart);
+
+router.get("/checkout", getCheckout);
 
 module.exports = router;
