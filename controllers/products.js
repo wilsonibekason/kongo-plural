@@ -5,7 +5,7 @@ const getProductsController = (req, res, next) => {
   console.log("In the MiddleWare");
   //   res.send(HTML);
   //   res.sendFile(path.join(__dirname, "../", "views", "add-product.html"));
-  res.render("add-product", {
+  res.render("admin/add-product", {
     pageTitle: "Products",
     path: "/admin/add-product",
     activeShop: true,
@@ -23,7 +23,7 @@ const addProductsController = (req, res) => {
 
 const fetchProductsController = (req, res, next) => {
   const products = Products.fetchAll((products) => {
-    res.render("shop", {
+    res.render("shop/product-list", {
       prods: products,
       pageTitle: "Shop",
       path: "/",
