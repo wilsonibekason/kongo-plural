@@ -2,40 +2,46 @@ const fs = require("fs");
 const path = require("path");
 let products = [];
 const p = path.join(
-  path.dirname(process.mainModule.filename),
+  path.dirname(require.main.filename),
   "data",
   "products.json"
 );
 const getProductFromFile = (cb) => {
-  fs.readFileSync(p, (err, fileContent) => {
-    // err ? cb([]) : cb(JSON.parse(fileContent));
+  fs.readFile(p, (err, fileContent) => {
     if (err) {
+      console.log(`Error reading file: ${err}`);
       cb([]);
     } else {
-      cb(JSON.parse(fileContent));
+      try {
+        const products = JSON.parse(fileContent);
+        cb(products);
+      } catch (err) {
+        console.log(`Error parsing JSON: ${err}`);
+        cb([]);
+      }
     }
   });
 };
+
 class Product {
   constructor(t) {
     this.title = t;
   }
-  save() {
-    // fs.readFileSync(p, (err, fileContent) => {
-    //   console.log(err, fileContent);
-    //   if (!err) {
-    //     products = JSON.parse(fileContent);
-    //   }
-    //   products.push(this);
-    //   fs.writeFile(p, JSON.stringify(products));
-    // });
+  save(cb) {
     getProductFromFile((products) => {
       products.push(this);
-      fs.writeFile(p, JSON.stringify(products));
+      fs.writeFile(p, JSON.stringify(products), (err) => {
+        if (err) {
+          console.log(`Error writing file: ${err}`);
+          cb([]);
+        } else {
+          cb(products);
+        }
+      });
     });
   }
   static fetchAll(cb) {
-    getProductFromFile(cb);
+    return getProductFromFile(cb);
   }
 }
 
