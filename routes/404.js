@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
+const { notFound } = require("../controllers/404.controller");
 const HTML = `<html> <style>
 @keyframes fadeInUp {
   from {
@@ -18,11 +19,6 @@ const HTML = `<html> <style>
 <p style='margin-top: 1rem; font-size: 1.2rem; text-align: center; color: #555;'>Oops! The page you are looking for might have been removed or is temporarily unavailable. <br>Please check the URL and try again or go back to the <a href='/' style='color: #4CAF50; text-decoration: none;'>homepage</a>.</p>
 </div> </body> </html>
 `;
+router.use(notFound);
 
-router.use((req, res, next) => {
-  //   res.status(404).send(HTML);
-  //   res.status(404).sendFile(__dirname, "../", "views", "404.html");
-  res.render("404", { pageTitle: "Not Found Page" });
-});
-  
 module.exports = router;

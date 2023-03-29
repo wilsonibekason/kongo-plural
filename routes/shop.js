@@ -3,7 +3,7 @@ const path = require("path");
 
 const router = express.Router();
 const rootDir = require("../util/pathz");
-const { products } = require("./admin");
+const { fetchProducts } = require("../controllers/products");
 const HTML = `<!DOCTYPE html>
 <html>
   <head>
@@ -58,20 +58,6 @@ const HTML = `<!DOCTYPE html>
 </html>
 `;
 
-router.get("/", (req, res, next) => {
-  console.log("In another MiddleWare", products);
-  //   res.send(HTML);
-  //   res.sendFile(path.join(rootDir, "views", "shop.html"));
-  res.render("shop", {
-    prods: products,
-    pageTitle: "Shop",
-    path: "/",
-    hasProducts: products.length > 0,
-    activeShop: true,
-    activeAddProduct: true,
-    productCSS: true,
-    formCSS: true,
-  });
-});
+router.get("/", fetchProducts);
 
 module.exports = router;

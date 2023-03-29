@@ -3,11 +3,15 @@ const bodyParser = require("body-parser");
 const express = require("express");
 // const { engine } = require("express-handlebars");
 
-const { products, routes } = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 const shopRoute = require("./routes/shop");
 const NotFoundRoute = require("./routes/404");
 const { handler, someText, newHandler } = require("./routes");
-console.log(someText);
+
+const someArray = [3, 5, 4, 6, 1, 7, 45, 6];
+const [a, b, c, d, e, f] = someArray;
+
+console.log(someText, a, b, c, e, f);
 const app = express();
 // app.engine(
 //   "hbs",
@@ -21,7 +25,7 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/admin", routes);
+app.use("/admin", adminRoutes);
 
 app.use(shopRoute);
 app.use(NotFoundRoute);
