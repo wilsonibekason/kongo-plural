@@ -1,4 +1,5 @@
-const products = [];
+// const products = [];
+const Products = require("../models/product.model");
 
 const getProductsController = (req, res, next) => {
   console.log("In the MiddleWare");
@@ -15,25 +16,26 @@ const getProductsController = (req, res, next) => {
 };
 
 const addProductsController = (req, res) => {
-  console.log(req.body);
-  products.push({ title: req.body.title });
+  const products = new Products(req.body.title);
+  products.save();
   res.redirect("/");
 };
 
 const fetchProductsController = (req, res, next) => {
-  console.log("In another MiddleWare", products);
+  const products = Products.fetchAll((products) => {
+    res.render("shop", {
+      prods: products,
+      pageTitle: "Shop",
+      path: "/",
+      hasProducts: products.length > 0,
+      activeShop: true,
+      activeAddProduct: true,
+      productCSS: true,
+      formCSS: true,
+    });
+  });
   //   res.send(HTML);
   //   res.sendFile(path.join(rootDir, "views", "shop.html"));
-  res.render("shop", {
-    prods: products,
-    pageTitle: "Shop",
-    path: "/",
-    hasProducts: products.length > 0,
-    activeShop: true,
-    activeAddProduct: true,
-    productCSS: true,
-    formCSS: true,
-  });
 };
 module.exports = {
   addProducts: addProductsController,
