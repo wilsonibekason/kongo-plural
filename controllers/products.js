@@ -45,6 +45,14 @@ const fetchProductsController = (req, res, next) => {
 
 const getProductIndexController = (req, res, next) => {
   const prodId = req.params.productId;
+  Products.findById(prodId, (product) => {
+    res.render("shop/product-detail", {
+      product,
+      pageTitle: product && product.title,
+      path: `/products`,
+    });
+  });
+  // res.redirect("/");
 };
 
 const getIndexController = (req, res, next) => {

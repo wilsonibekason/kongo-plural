@@ -42,6 +42,13 @@ class Product {
   static fetchAll(cb) {
     return getProductFromFile(cb);
   }
+
+  static findById(id, cb) {
+    getProductFromFile((products) => {
+      const product = products.find((product) => product.id === id);
+      cb(product);
+    });
+  }
 }
 
 const productModel = new Product();
