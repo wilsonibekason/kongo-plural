@@ -24,19 +24,31 @@ const getProductFromFile = (cb) => {
 };
 
 class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
   }
   save() {
-    this.id = Math.floor(Math.random() * 999).toString();
     getProductFromFile((products) => {
-      products.push(this);
-      fs.writeFile(p, JSON.stringify(products), (err) => {
-        console.log(`Error writing file: ${err}`);
-      });
+      if (this.id) {
+        let existingProductsIndex = products.findIndex(
+          (prod) => prod.id === this.id
+        );
+        let updatedProducts = [...products];
+        updatedProducts[existingProductsIndex] = this;
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+          console.log(`Error writing file: ${err}`);
+        });
+      } else {
+        this.id = Math.floor(Math.random() * 999).toString();
+        products.push(this);
+        fs.writeFile(p, JSON.stringify(products), (err) => {
+          console.log(`Error writing file: ${err}`);
+        });
+      }
     });
   }
   static fetchAll(cb) {

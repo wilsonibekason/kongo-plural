@@ -29,9 +29,28 @@ const editAdminController = (req, res, next) => {
   });
 };
 
+const postEditAdminController = (req, res, next) => {
+  const {
+    productId: prodId,
+    title: updatedTitle,
+    imageUrl: updatedImageUrl,
+    price: updatedPrice,
+    description: updatedDesc,
+  } = req.body;
+  const products = new Products(
+    prodId,
+    updatedTitle,
+    updatedImageUrl,
+    updatedDesc,
+    updatedPrice
+  );
+  products.save();
+  res.redirect("/admin/products");
+};
+
 const addAdminController = (req, res) => {
   const { title, imageUrl, description, price } = req.body;
-  const products = new Products(title, imageUrl, description, price);
+  const products = new Products(null, title, imageUrl, description, price);
   products.save();
   res.redirect("/products");
 };
@@ -56,4 +75,5 @@ module.exports = {
   addAdmin: addAdminController,
   getAdminProducts: getAdminProductsController,
   editAdmin: editAdminController,
+  postEditAdmin: postEditAdminController,
 };
