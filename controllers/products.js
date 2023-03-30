@@ -16,7 +16,11 @@ const getProductsController = (req, res, next) => {
 };
 
 const addProductsController = (req, res) => {
-  const { title, imageUrl, description, price } = req.body;
+  // const { title, imageUrl, description, price } = req.body;
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const price = req.body.price;
+  const description = req.body.description;
   const products = new Products(title, imageUrl, description, price);
   products.save();
   res.redirect("/products");

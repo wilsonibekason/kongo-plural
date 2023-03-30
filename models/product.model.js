@@ -30,16 +30,11 @@ class Product {
     this.description = description;
     this.price = price;
   }
-  save(cb) {
+  save() {
     getProductFromFile((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
-        if (err) {
-          console.log(`Error writing file: ${err}`);
-          cb([]);
-        } else {
-          cb(products);
-        }
+        console.log(`Error writing file: ${err}`);
       });
     });
   }

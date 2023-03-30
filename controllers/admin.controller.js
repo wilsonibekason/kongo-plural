@@ -15,9 +15,11 @@ const getAdminController = (req, res, next) => {
 };
 
 const addAdminController = (req, res) => {
-  const products = new Products(req.body.title);
+  const { title, imageUrl, description, price } = req.body;
+
+  const products = new Products(title, imageUrl, description, price);
   products.save();
-  res.redirect("/");
+  res.redirect("/products");
 };
 
 const getAdminProductsController = (req, res, next) => {
