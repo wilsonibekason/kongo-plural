@@ -77,6 +77,12 @@ const getCartController = (req, res, next) => {
   });
 };
 
+const postCartController = (req, res, next) => {
+  const prodId = req.body.productId;
+  console.log(prodId);
+  res.redirect("/cart");
+};
+
 const getCheckoutController = (req, res, next) => {
   res.render("/checkout", {
     path: "/checkout",
@@ -99,4 +105,5 @@ module.exports = {
   getCheckout: getCheckoutController,
   getOrders: getOrdersControlller,
   geProductIndex: getProductIndexController,
+  postCart: postCartController,
 };
