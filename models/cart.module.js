@@ -26,7 +26,7 @@ class Cart {
       if (existingProducts) {
         updatedProduct = { ...existingProducts };
         updatedProduct.qty = updatedProduct.qty + 1;
-        cart.products[existingProductsIndex] = [...updatedProduct];
+        cart.products[existingProductsIndex] = { ...updatedProduct };
       } else {
         updatedProduct = { id, qty: 1 };
         cart.products = [...cart.products, updatedProduct];

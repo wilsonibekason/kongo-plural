@@ -6,6 +6,7 @@ const {
   addAdmin,
   getAdmin,
   getAdminProducts,
+  editAdmin,
 } = require("../controllers/admin.controller");
 const HTML = `
 <form action='/admin/add-product' method='POST' style='display: flex; flex-direction: column; align-items: center;'>
@@ -18,6 +19,8 @@ router.get("/add-product", getAdmin);
 router.get("/products", getAdminProducts);
 
 router.post("/add-product", addAdmin);
+
+router.post("/edit-product/:productId", editAdmin);
 
 module.exports = router;
 // exports.routes = router;

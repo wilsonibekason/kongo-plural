@@ -4,7 +4,7 @@ const getAdminController = (req, res, next) => {
   console.log("In the MiddleWare");
   //   res.send(HTML);
   //   res.sendFile(path.join(__dirname, "../", "views", "add-product.html"));
-  res.render("admin/add-product", {
+  res.render("admin/edit-product", {
     pageTitle: "Products",
     path: "/admin/add-product",
     activeShop: true,
@@ -14,9 +14,18 @@ const getAdminController = (req, res, next) => {
   });
 };
 
+const editAdminController = (req, res, next) => {
+  const editMode = req.query.edit;
+  !editMode && res.redirect("/");
+  res.render("admin/edit-product", {
+    pageTitle: "Edit Products",
+    path: " /admin/add-product",
+    edit: editMode,
+  });
+};
+
 const addAdminController = (req, res) => {
   const { title, imageUrl, description, price } = req.body;
-
   const products = new Products(title, imageUrl, description, price);
   products.save();
   res.redirect("/products");
@@ -41,4 +50,5 @@ module.exports = {
   getAdmin: getAdminController,
   addAdmin: addAdminController,
   getAdminProducts: getAdminProductsController,
+  editAdmin: editAdminController,
 };

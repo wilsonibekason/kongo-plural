@@ -26,7 +26,9 @@
           </p>
         </div>
         <div class="card__actions">
-          <button class="btn">Edit</button>
+          <form action="/admin/edit-product" method="post">
+            <button class="btn" type="submit">Edit</button>
+          </form>
           <form action="/admin/delete-product" method="post">
             <button class="btn" type="submit">Delete</button>
           </form>
