@@ -20,7 +20,7 @@ router.get("/products", getAdminProducts);
 
 router.post("/add-product", addAdmin);
 
-router.post("/edit-product/:productId", editAdmin);
+router.get("/edit-product/:productId", editAdmin);
 
 module.exports = router;
 // exports.routes = router;

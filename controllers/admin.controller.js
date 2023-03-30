@@ -11,16 +11,21 @@ const getAdminController = (req, res, next) => {
     activeAddProduct: true,
     productSS: true,
     formCSS: true,
+    editing: false,
   });
 };
 
 const editAdminController = (req, res, next) => {
   const editMode = req.query.edit;
-  !editMode && res.redirect("/");
-  res.render("admin/edit-product", {
-    pageTitle: "Edit Products",
-    path: " /admin/add-product",
-    edit: editMode,
+  if (!editMode) return res.redirect("/");
+  const prodId = req.params.productId;
+  Products.findById(prodId, (product) => {
+    res.render("admin/edit-product", {
+      pageTitle: "Edit Products",
+      path: " /admin/edit-product",
+      editing: editMode,
+      product,
+    });
   });
 };
 
