@@ -60,15 +60,22 @@ const getIndexController = (req, res, next) => {
 
 const getCartController = (req, res, next) => {
   res.render("shop/cart", {
-    path: "/shop/cart",
+    path: "/cart",
     pageTitle: "Cart",
   });
 };
 
 const getCheckoutController = (req, res, next) => {
   res.render("/checkout", {
-    path: "/cart",
+    path: "/checkout",
     pageTitle: "Checlout",
+  });
+};
+
+const getOrdersControlller = (req, res, next) => {
+  res.render("shop/orders", {
+    path: "/orders",
+    pageTitle: "/shop/orders",
   });
 };
 module.exports = {
@@ -78,4 +85,5 @@ module.exports = {
   getIndex: getIndexController,
   getCart: getCartController,
   getCheckout: getCheckoutController,
+  getOrders: getOrdersControlller,
 };

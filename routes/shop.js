@@ -8,6 +8,7 @@ const {
   getIndex,
   getCart,
   getCheckout,
+  getOrders,
 } = require("../controllers/products");
 const HTML = `<!DOCTYPE html>
 <html>
@@ -70,5 +71,7 @@ router.get("/products", fetchProducts);
 router.get("/cart", getCart);
 
 router.get("/checkout", getCheckout);
+
+router.get("/orders", getOrders);
 
 module.exports = router;
