@@ -43,6 +43,10 @@ const fetchProductsController = (req, res, next) => {
   //   res.sendFile(path.join(rootDir, "views", "shop.html"));
 };
 
+const getProductIndexController = (req, res, next) => {
+  const prodId = req.params.productId;
+};
+
 const getIndexController = (req, res, next) => {
   const products = Products.fetchAll((products) => {
     res.render("shop/index", {
@@ -86,4 +90,5 @@ module.exports = {
   getCart: getCartController,
   getCheckout: getCheckoutController,
   getOrders: getOrdersControlller,
+  geProductIndex: getProductIndexController,
 };

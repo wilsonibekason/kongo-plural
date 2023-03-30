@@ -9,6 +9,7 @@ const {
   getCart,
   getCheckout,
   getOrders,
+  geProductIndex,
 } = require("../controllers/products");
 const HTML = `<!DOCTYPE html>
 <html>
@@ -67,6 +68,8 @@ const HTML = `<!DOCTYPE html>
 router.get("/", getIndex);
 
 router.get("/products", fetchProducts);
+
+router.get("/products/:productId", geProductIndex);
 
 router.get("/cart", getCart);
 

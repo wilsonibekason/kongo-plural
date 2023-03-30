@@ -31,6 +31,7 @@ class Product {
     this.price = price;
   }
   save() {
+    this.id = Math.floor(Math.random() * 999).toString();
     getProductFromFile((products) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
