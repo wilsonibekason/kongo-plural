@@ -2,6 +2,7 @@
 const Cart = require("../models/cart.module");
 const ProductDB = require("../models/product.db");
 const Products = require("../models/product.model");
+const ProductsORM = require("../models/product.sequelise");
 
 const getProductsController = (req, res, next) => {
   console.log("In the MiddleWare");
@@ -23,9 +24,14 @@ const addProductsController = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const products = new Products(title, imageUrl, description, price);
-  products.save();
+  ////////
+  // const products = new Products(title, imageUrl, description, price);
+  // products.save();
+  ProductsORM.create({ title, imageUrl, price, description })
+    .then((res) => console.log(`Responsse ${res}`))
+    .catch((err) => console.log(err));
   res.redirect("/products");
+  /////
 };
 
 const fetchProductsController = (req, res, next) => {
@@ -47,6 +53,22 @@ const fetchProductsController = (req, res, next) => {
     .then(([rows]) => {
       res.render("shop/product-list", {
         prods: rows,
+        pageTitle: "All products",
+        path: "/",
+        // hasProducts: products.length > 0,
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.log(err));
+
+  //// ORM method replace === enabled
+  ProductsORM.findAll()
+    .then((prods) => {
+      res.render("shop/product-list", {
+        prods,
         pageTitle: "All products",
         path: "/",
         // hasProducts: products.length > 0,
@@ -81,6 +103,27 @@ const getProductIndexController = (req, res, next) => {
       });
     })
     .catch((err) => console.log(`Error encountered ${err}`));
+  /// ORM Method approved
+  ProductsORM.findById(prodId)
+    .then((product) => {
+      res.render("shop/product-detail", {
+        product: product,
+        pageTitle: product && product.title,
+        path: `/products`,
+      });
+    })
+    .catch((err) => console.log(`Error encountered ${err}`));
+
+  //// other approach
+  ProductsORM.findAll({ where: { id: prodId } })
+    .then((product) => {
+      res.render("shop/product-detail", {
+        product: product[0],
+        pageTitle: product && product[0].title,
+        path: `/products`,
+      });
+    })
+    .catch((err) => console.log(`Error encountered ${err}`));
 };
 
 const getIndexController = (req, res, next) => {
@@ -100,6 +143,22 @@ const getIndexController = (req, res, next) => {
     .then(([rows]) => {
       res.render("shop/index", {
         prods: rows,
+        pageTitle: "Shop",
+        path: "/",
+        // hasProducts: products.length > 0,
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.log(err));
+
+  //// ORM method replace === enabled
+  ProductsORM.findAll()
+    .then((prods) => {
+      res.render("shop/index", {
+        prods: prods,
         pageTitle: "Shop",
         path: "/",
         // hasProducts: products.length > 0,

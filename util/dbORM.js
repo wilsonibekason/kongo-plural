@@ -1,5 +1,5 @@
 const Sequelize = require("sequelize").Sequelize;
-const sequelize = new Sequelize("nodelearn", "root", "Wil__001", {
+const sequelize = new Sequelize("nodeproduct", "root", "Wil__001", {
   dialect: "mysql",
   host: "localhost",
 });
