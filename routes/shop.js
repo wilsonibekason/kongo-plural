@@ -11,6 +11,7 @@ const {
   getOrders,
   geProductIndex,
   postCart,
+  postDeleteProduct,
 } = require("../controllers/products");
 const HTML = `<!DOCTYPE html>
 <html>
@@ -79,5 +80,7 @@ router.post("/cart", postCart);
 router.get("/checkout", getCheckout);
 
 router.get("/orders", getOrders);
+
+router.delete("/products/:productId", postDeleteProduct);
 
 module.exports = router;

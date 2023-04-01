@@ -100,6 +100,8 @@ const getOrdersControlller = (req, res, next) => {
     pageTitle: "/shop/orders",
   });
 };
+
+const deleteProductController = (req, res, next) => {};
 module.exports = {
   addProducts: addProductsController,
   getProducts: getProductsController,
@@ -110,4 +112,5 @@ module.exports = {
   getOrders: getOrdersControlller,
   geProductIndex: getProductIndexController,
   postCart: postCartController,
+  postDeleteProduct: deleteProductController,
 };
