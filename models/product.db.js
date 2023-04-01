@@ -1,3 +1,5 @@
+const db = require("../util/database");
+
 class ProductDB {
   constructor(id, title, imageUrl, description, price) {
     this.id = id;
@@ -7,10 +9,19 @@ class ProductDB {
     this.price = price;
   }
 
-  save() {}
-  fetchAll() {}
-  deleteById() {}
-  findById() {}
+  save() {
+    return db.execute("INSER INTO products VALUES (?, ?, ?, ?) ", [
+      this.title,
+      this.description,
+      this.imageUrl,
+      this.price,
+    ]);
+  }
+  static fetchAll() {
+    db.execute("SELECT * FROM products");
+  }
+  static deleteById(id) {}
+  static findById(id) {}
 }
 
 module.exports = ProductDB;

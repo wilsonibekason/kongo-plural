@@ -1,5 +1,6 @@
 // const products = [];
 const Cart = require("../models/cart.module");
+const ProductDB = require("../models/product.db");
 const Products = require("../models/product.model");
 
 const getProductsController = (req, res, next) => {
@@ -40,6 +41,22 @@ const fetchProductsController = (req, res, next) => {
       formCSS: true,
     });
   });
+
+  ///  fetch db
+  ProductDB.fetchAll()
+    .then(([rows]) => {
+      res.render("shop/product-list", {
+        prods: rows,
+        pageTitle: "All products",
+        path: "/",
+        // hasProducts: products.length > 0,
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch();
   //   res.send(HTML);
   //   res.sendFile(path.join(rootDir, "views", "shop.html"));
 };
@@ -60,6 +77,18 @@ const getIndexController = (req, res, next) => {
   const products = Products.fetchAll((products) => {
     res.render("shop/index", {
       prods: products,
+      pageTitle: "Shop",
+      path: "/",
+      // hasProducts: products.length > 0,
+      activeShop: true,
+      activeAddProduct: true,
+      productCSS: true,
+      formCSS: true,
+    });
+  });
+  ProductDB.fetchAll().then(([rows]) => {
+    res.render("shop/index", {
+      prods: rows,
       pageTitle: "Shop",
       path: "/",
       // hasProducts: products.length > 0,
@@ -100,7 +129,6 @@ const getOrdersControlller = (req, res, next) => {
     pageTitle: "/shop/orders",
   });
 };
-
 
 module.exports = {
   addProducts: addProductsController,

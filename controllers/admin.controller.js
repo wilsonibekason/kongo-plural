@@ -1,3 +1,4 @@
+const ProductDB = require("../models/product.db");
 const Products = require("../models/product.model");
 
 const getAdminController = (req, res, next) => {
@@ -46,6 +47,18 @@ const postEditAdminController = (req, res, next) => {
   );
   products.save();
   res.redirect("/admin/products");
+  /// replace
+  const productsDB = new ProductDB(
+    prodId,
+    updatedTitle,
+    updatedImageUrl,
+    updatedDesc,
+    updatedPrice
+  );
+  productsDB
+    .save()
+    .then(() => res.redirect("/admin/products"))
+    .catch((err) => console.log(`Err saving file  ${err}`));
 };
 
 const addAdminController = (req, res) => {
@@ -53,6 +66,13 @@ const addAdminController = (req, res) => {
   const products = new Products(null, title, imageUrl, description, price);
   products.save();
   res.redirect("/products");
+
+  /// replace with this
+  const productsDB = new ProductDB(null, title, imageUrl, description, price);
+  productsDB
+    .save()
+    .then(() => res.redirect("/products"))
+    .catch((err) => console.log(`Err saving  file ${err}`));
 };
 
 const getAdminProductsController = (req, res, next) => {
@@ -68,6 +88,22 @@ const getAdminProductsController = (req, res, next) => {
       formCSS: true,
     });
   });
+
+  ////  NEW RETURN STATEMENT
+  ProductDB.fetchAll()
+    .then(([rows, columnLists]) => {
+      res.render("admin/products", {
+        prods: rows,
+        pageTitle: "Admin Projects",
+        path: "/admin/products",
+        // hasProducts: products.length > 0,
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const deleteProductController = (req, res, next) => {
