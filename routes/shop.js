@@ -81,6 +81,6 @@ router.get("/checkout", getCheckout);
 
 router.get("/orders", getOrders);
 
-router.delete("/products/:productId", postDeleteProduct);
+
 
 module.exports = router;

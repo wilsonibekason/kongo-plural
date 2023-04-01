@@ -70,10 +70,17 @@ const getAdminProductsController = (req, res, next) => {
   });
 };
 
+const deleteProductController = (req, res, next) => {
+  const { productId } = req.body;
+  Products.deleteById(productId);
+  res.redirect("/admin/products");
+};
+
 module.exports = {
   getAdmin: getAdminController,
   addAdmin: addAdminController,
   getAdminProducts: getAdminProductsController,
   editAdmin: editAdminController,
   postEditAdmin: postEditAdminController,
+  postDeleteProduct: deleteProductController,
 };
