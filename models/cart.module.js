@@ -39,6 +39,21 @@ class Cart {
     // Analyze cart => check it cart exists
     // increase cart quantity or add product to cart model
   }
+
+  static deleteProduct(id, productPrice) {
+    fs.readFile(p, (err, fileContent) => {
+      err && console.log(`error reading fole ${err}`);
+      let cart = JSON.parse(fileContent);
+      const updatedCart = { ...cart };
+      const product = updatedCart.products.find((prod) => prod.id === id);
+      const productQty = product.qty;
+      cart.products = cart.products.filter((prod) => prod.id !== id);
+      cart.totalPrice = cart.totalPrice - productPrice * productQty;
+      fs.writeFile(p, JSON.stringify(updatedCart), (err) =>
+        console.log(`error  writing to file ${err}`)
+      );
+    });
+  }
 }
 
 module.exports = Cart;
