@@ -65,12 +65,22 @@ const getProductIndexController = (req, res, next) => {
   const prodId = req.params.productId;
   Products.findById(prodId, (product) => {
     res.render("shop/product-detail", {
-      product,
-      pageTitle: product && product.title,
+      product: product[0],
+      pageTitle: product[0] && product[0].title,
       path: `/products`,
     });
   });
   // res.redirect("/");
+  /// replace with thiis
+  ProductDB.findById(prodId)
+    .then(([product]) => {
+      res.render("shop/product-detail", {
+        product,
+        pageTitle: product && product.title,
+        path: `/products`,
+      });
+    })
+    .catch();
 };
 
 const getIndexController = (req, res, next) => {
