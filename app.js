@@ -28,6 +28,11 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use((req, res, next) => {
+  User.findAll({ where: { id: 1 } })
+    .then((user) => (req.user = user[0] && next()))
+    .catch((err) => console.log(err));
+});
 db.execute("SELECT * FROM  products")
   .then(([rows]) => console.log(rows))
   .catch((err) => console.log(err));

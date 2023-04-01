@@ -31,7 +31,9 @@ const editAdminController = (req, res, next) => {
   });
 
   ///// NEW APPROACH
-  ProductsORM.findAll({ where: { id: prodId } })
+  req.user
+    .getProducts({ where: { id: prodId } })
+    // ProductsORM.findAll({ where: { id: prodId } })
     .then((product) => {
       res.render("admin/edit-product", {
         pageTitle: "Edit Products",
@@ -112,6 +114,11 @@ const addAdminController = (req, res) => {
     .save()
     .then(() => res.redirect("/products"))
     .catch((err) => console.log(`Err saving  file ${err}`));
+  //// REQUEST FROM THE DUMMY  USER DATA
+  req.user
+    .createProduct({ title, imageUrl, description, price })
+    .then(() => res.redirect("/admins/products"))
+    .catch((err) => console.log(err));
 };
 
 const getAdminProductsController = (req, res, next) => {
@@ -145,20 +152,24 @@ const getAdminProductsController = (req, res, next) => {
     .catch((err) => console.log(err));
 
   ///// ORM Methods
-  return ProductsORM.findAll()
-    .then((prods) => {
-      res.render("admin/products", {
-        prods: prods,
-        pageTitle: "Admin Projects",
-        path: "/admin/products",
-        // hasProducts: products.length > 0,
-        activeShop: true,
-        activeAddProduct: true,
-        productCSS: true,
-        formCSS: true,
-      });
-    })
-    .catch((err) => console.log(err));
+  return (
+    req.user
+      .findProducts()
+      // return ProductsORM.findAll()
+      .then((prods) => {
+        res.render("admin/products", {
+          prods: prods,
+          pageTitle: "Admin Projects",
+          path: "/admin/products",
+          // hasProducts: products.length > 0,
+          activeShop: true,
+          activeAddProduct: true,
+          productCSS: true,
+          formCSS: true,
+        });
+      })
+      .catch((err) => console.log(err))
+  );
 };
 
 const deleteProductController = (req, res, next) => {
