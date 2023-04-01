@@ -9,6 +9,8 @@ const NotFoundRoute = require("./routes/404");
 const { handler, someText, newHandler } = require("./routes");
 const db = require("./util/database");
 const sequelize = require("./util/dbORM");
+const Products = require("./models/product.sequelise");
+const User = require("./models/user.sequelize");
 
 const someArray = [3, 5, 4, 6, 1, 7, 45, 6];
 const [a, b, c, d, e, f] = someArray;
@@ -34,9 +36,17 @@ app.use("/admin", adminRoutes);
 
 app.use(shopRoute);
 app.use(NotFoundRoute);
-
+Products.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 sequelize
-  .sync()
+  .sync({ force: true })
+  .then(() => {
+    return User.findAll({ where: { id: 1 } });
+  })
+  .then((user) => {
+    if (!user[0])
+      return User.create({ name: "wilson", email: "Wilsoibekason@gmail.com" });
+    else return user[0];
+  })
   .then((o) => {
     console.log(o);
     app.listen(3000);
