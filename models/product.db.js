@@ -18,11 +18,11 @@ class ProductDB {
     ]);
   }
   static fetchAll() {
-    db.execute("SELECT * FROM products");
+    return db.execute("SELECT * FROM products");
   }
   static deleteById(id) {}
   static findById(id) {
-    return db.execute("SELECT * FROM products WHERE id products.id = ?", [id]);
+    return db.execute("SELECT * FROM products WHERE id = ?", [id]);
   }
 }
 

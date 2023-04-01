@@ -29,18 +29,18 @@ const addProductsController = (req, res) => {
 };
 
 const fetchProductsController = (req, res, next) => {
-  const products = Products.fetchAll((products) => {
-    res.render("shop/product-list", {
-      prods: products,
-      pageTitle: "All products",
-      path: "/",
-      // hasProducts: products.length > 0,
-      activeShop: true,
-      activeAddProduct: true,
-      productCSS: true,
-      formCSS: true,
-    });
-  });
+  // const products = Products.fetchAll((products) => {
+  //   res.render("shop/product-list", {
+  //     prods: products,
+  //     pageTitle: "All products",
+  //     path: "/",
+  //     // hasProducts: products.length > 0,
+  //     activeShop: true,
+  //     activeAddProduct: true,
+  //     productCSS: true,
+  //     formCSS: true,
+  //   });
+  // });
 
   ///  fetch db
   ProductDB.fetchAll()
@@ -56,58 +56,60 @@ const fetchProductsController = (req, res, next) => {
         formCSS: true,
       });
     })
-    .catch();
+    .catch((err) => console.log(err));
   //   res.send(HTML);
   //   res.sendFile(path.join(rootDir, "views", "shop.html"));
 };
 
 const getProductIndexController = (req, res, next) => {
   const prodId = req.params.productId;
-  Products.findById(prodId, (product) => {
-    res.render("shop/product-detail", {
-      product: product[0],
-      pageTitle: product[0] && product[0].title,
-      path: `/products`,
-    });
-  });
+  // Products.findById(prodId, (product) => {
+  //   res.render("shop/product-detail", {
+  //     product: product && product,
+  //     pageTitle: product && product.title,
+  //     path: `/products`,
+  //   });
+  // });
   // res.redirect("/");
   /// replace with thiis
   ProductDB.findById(prodId)
     .then(([product]) => {
       res.render("shop/product-detail", {
-        product,
-        pageTitle: product && product.title,
+        product: product[0],
+        pageTitle: product && product[0].title,
         path: `/products`,
       });
     })
-    .catch();
+    .catch((err) => console.log(`Error encountered ${err}`));
 };
 
 const getIndexController = (req, res, next) => {
-  const products = Products.fetchAll((products) => {
-    res.render("shop/index", {
-      prods: products,
-      pageTitle: "Shop",
-      path: "/",
-      // hasProducts: products.length > 0,
-      activeShop: true,
-      activeAddProduct: true,
-      productCSS: true,
-      formCSS: true,
-    });
-  });
-  ProductDB.fetchAll().then(([rows]) => {
-    res.render("shop/index", {
-      prods: rows,
-      pageTitle: "Shop",
-      path: "/",
-      // hasProducts: products.length > 0,
-      activeShop: true,
-      activeAddProduct: true,
-      productCSS: true,
-      formCSS: true,
-    });
-  });
+  // const products = Products.fetchAll((products) => {
+  //   res.render("shop/index", {
+  //     prods: products,
+  //     pageTitle: "Shop",
+  //     path: "/",
+  //     // hasProducts: products.length > 0,
+  //     activeShop: true,
+  //     activeAddProduct: true,
+  //     productCSS: true,
+  //     formCSS: true,
+  //   });
+  // });
+  ProductDB.fetchAll()
+    .then(([rows]) => {
+      res.render("shop/index", {
+        prods: rows,
+        pageTitle: "Shop",
+        path: "/",
+        // hasProducts: products.length > 0,
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 const getCartController = (req, res, next) => {

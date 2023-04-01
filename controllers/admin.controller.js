@@ -38,15 +38,15 @@ const postEditAdminController = (req, res, next) => {
     price: updatedPrice,
     description: updatedDesc,
   } = req.body;
-  const products = new Products(
-    prodId,
-    updatedTitle,
-    updatedImageUrl,
-    updatedDesc,
-    updatedPrice
-  );
-  products.save();
-  res.redirect("/admin/products");
+  // const products = new Products(
+  //   prodId,
+  //   updatedTitle,
+  //   updatedImageUrl,
+  //   updatedDesc,
+  //   updatedPrice
+  // );
+  // products.save();
+  // res.redirect("/admin/products");
   /// replace
   const productsDB = new ProductDB(
     prodId,
@@ -63,9 +63,9 @@ const postEditAdminController = (req, res, next) => {
 
 const addAdminController = (req, res) => {
   const { title, imageUrl, description, price } = req.body;
-  const products = new Products(null, title, imageUrl, description, price);
-  products.save();
-  res.redirect("/products");
+  // const products = new Products(null, title, imageUrl, description, price);
+  // products.save();
+  // res.redirect("/products");
 
   /// replace with this
   const productsDB = new ProductDB(null, title, imageUrl, description, price);
@@ -76,21 +76,21 @@ const addAdminController = (req, res) => {
 };
 
 const getAdminProductsController = (req, res, next) => {
-  return Products.fetchAll((products) => {
-    res.render("admin/products", {
-      prods: products,
-      pageTitle: "Admin Projects",
-      path: "/admin/products",
-      // hasProducts: products.length > 0,
-      activeShop: true,
-      activeAddProduct: true,
-      productCSS: true,
-      formCSS: true,
-    });
-  });
+  // return Products.fetchAll((products) => {
+  //   res.render("admin/products", {
+  //     prods: products,
+  //     pageTitle: "Admin Projects",
+  //     path: "/admin/products",
+  //     // hasProducts: products.length > 0,
+  //     activeShop: true,
+  //     activeAddProduct: true,
+  //     productCSS: true,
+  //     formCSS: true,
+  //   });
+  // });
 
   ////  NEW RETURN STATEMENT
-  ProductDB.fetchAll()
+  return ProductDB.fetchAll()
     .then(([rows, columnLists]) => {
       res.render("admin/products", {
         prods: rows,
