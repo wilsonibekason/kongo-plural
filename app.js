@@ -55,7 +55,8 @@ Order.hasOne(User);
 User.hasMany(Order);
 Order.belongsToMany(Products, { through: OrderItem });
 sequelize
-  .sync({ force: true })
+  // .sync({ force: true })
+  .sync()
   .then(() => {
     return User.findAll({ where: { id: 1 } });
   })
