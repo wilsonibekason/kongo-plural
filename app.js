@@ -59,8 +59,10 @@ sequelize
       return User.create({ name: "wilson", email: "Wilsoibekason@gmail.com" });
     else return user[0];
   })
-  .then((o) => {
-    console.log(o);
+  .then((user) => {
+    return user.createCart();
+  })
+  .then(() => {
     app.listen(3000);
   })
   .catch((err) => console.log(err))

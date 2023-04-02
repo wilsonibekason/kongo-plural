@@ -171,10 +171,27 @@ const getIndexController = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+const getNewCartContoller = (req, res, next) => {
+  req.user
+    .getCart()
+    .then()
+    .catch((err) => console.log(err));
+};
+
 const getCartController = (req, res, next) => {
-  res.render("shop/cart", {
-    path: "/cart",
-    pageTitle: "Cart",
+  Cart.getCart((cart) => {
+    Products.fetchAll((prods) => {
+      const cartProds = [];
+      for (let prod = 0; prod > prods.length; prod++) {
+        const cartProdData = cart.find((product) => product.id === prod.id);
+        if (cartProdData)
+          cartProds.push({ productData: prod, qty: cartProdData.qty });
+      }
+      res.render("shop/cart", {
+        path: "/cart",
+        pageTitle: "Cart",
+      });
+    });
   });
 };
 
