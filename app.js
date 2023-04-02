@@ -11,6 +11,8 @@ const db = require("./util/database");
 const sequelize = require("./util/dbORM");
 const Products = require("./models/product.sequelise");
 const User = require("./models/user.sequelize");
+const Cart = require("./models/cart.sequelize");
+const CartItem = require("./models/cart-item.sequenlize");
 
 const someArray = [3, 5, 4, 6, 1, 7, 45, 6];
 const [a, b, c, d, e, f] = someArray;
@@ -42,6 +44,11 @@ app.use("/admin", adminRoutes);
 app.use(shopRoute);
 app.use(NotFoundRoute);
 Products.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
+User.hasMany(Products);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Products, { through: CartItem });
+Products.belongsToMany(Cart, { through: CartItem });
 sequelize
   .sync({ force: true })
   .then(() => {
