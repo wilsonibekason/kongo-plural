@@ -268,7 +268,7 @@ const getCheckoutController = (req, res, next) => {
 
 const getOrdersControlller = (req, res, next) => {
   req.users
-    .getOrders()
+    .getOrders({ include: ["products"] })
     .then((orders) => {
       res.render("shop/orders", {
         path: "/orders",
