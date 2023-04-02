@@ -13,6 +13,8 @@ const Products = require("./models/product.sequelise");
 const User = require("./models/user.sequelize");
 const Cart = require("./models/cart.sequelize");
 const CartItem = require("./models/cart-item.sequenlize");
+const OrderItem = require("./models/order-item.sequelize");
+const Order = require("./models/order.sequelize");
 
 const someArray = [3, 5, 4, 6, 1, 7, 45, 6];
 const [a, b, c, d, e, f] = someArray;
@@ -49,6 +51,9 @@ User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Products, { through: CartItem });
 Products.belongsToMany(Cart, { through: CartItem });
+Order.hasOne(User);
+User.hasMany(Order);
+Order.belongsToMany(Products, { through: OrderItem });
 sequelize
   .sync({ force: true })
   .then(() => {
