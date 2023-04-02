@@ -5,19 +5,29 @@ const shopRoute = require("./routes/shop");
 const path = require("path");
 const NotFoundRoute = require("./routes/404");
 require("dotenv").config();
-console.log(process.env);
+// console.log(process.env);
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
+const { clientConnect, connectDB } = require("./util/mongodb");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-const { clientConnect, connectDB } = require("./util/mongodb");
 app.use("/admin", adminRoutes);
 
 app.use(shopRoute);
 app.use(NotFoundRoute);
 app.use((req, res, next) => {});
-connectDB((client) => {
-  app.listen(3000);
-  console.log(client);
-});
+// connectDB((client) => {
+//   app.listen(3000);
+//   console.log(client);
+// });
+
+clientConnect
+  .connect((err) => {
+    console.log(err);
+  })
+  .then((res) => {
+    console.log(`Conneced ${res}`);
+    app.listen(3000);
+  })
+  .catch((err) => console.log(err));
