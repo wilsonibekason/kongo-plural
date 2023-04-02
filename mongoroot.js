@@ -27,7 +27,7 @@ clientConnect
     console.log(err);
   })
   .then((res) => {
-    console.log(`Conneced ${res}`);
+    console.log(`Connected ${res}`);
     app.listen(3000);
   })
   .catch((err) => console.log(err));
