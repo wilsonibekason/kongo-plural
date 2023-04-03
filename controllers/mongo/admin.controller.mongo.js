@@ -1,5 +1,8 @@
 const ProductMongo = require("../../models/mongoose/product.mongo");
-const getAdminController = (req, res, next) => {};
+
+const getAdminController = (req, res, next) => {
+  return ProductMongo.fetchAll().then((__) => {});
+};
 const editAdminController = (req, res, next) => {};
 const postEditAdminController = (req, res, next) => {};
 const addAdminController = (req, res, next) => {
