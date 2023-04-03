@@ -13,10 +13,19 @@ const { clientConnect, connectDB } = require("./util/mongodb");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/admin", adminRoutes);
+const UserMongo = require("./models/mongoose/user.mongo");
 
 app.use(shopRoute);
 app.use(NotFoundRoute);
-app.use((req, res, next) => {});
+app.use((req, res, next) => {
+  return UserMongo.findById(1)
+    .then((__) => {
+      console.log(__);
+      req.user = user;
+    })
+    .catch((err) => console.log(err));
+  next();
+});
 // connectDB((client) => {
 //   app.listen(3000);
 //   console.log(client);
