@@ -23,9 +23,9 @@ const HTML = `
 <button type="submit" style='padding: 10px; border: none; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #4CAF50; color: #fff; cursor: pointer; transition: background-color 0.3s ease-in-out;'>Post Product</button>
 </form>
 `;
-router.get("/add-product", getAdmin);
+router.get("/add-product", getAdminMongo);
 
-router.get("/products", getAdminProducts);
+router.get("/products", getAdminProductsMongo);
 
 router.post("/add-product", /*addAdmin*/ addAdminMongo);
 

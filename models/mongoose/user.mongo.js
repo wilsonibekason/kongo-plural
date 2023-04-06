@@ -17,9 +17,15 @@ class UserMongo {
       .then((__) => __)
       .catch();
   }
-  static findById(prodId) {
+  static findById(userId) {
     const db = getDB();
-    return generateCollectionHook(db, "users").find({ _id: ObjectId(prodId) });
+    return generateCollectionHook(db, "users")
+      .find({ _id: ObjectId(userId) })
+      .then((__) => {
+        console.log(__);
+        return __;
+      })
+      .catch((err) => console.log(err));
   }
 }
 

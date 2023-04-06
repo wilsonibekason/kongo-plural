@@ -43,7 +43,15 @@ const postEditAdminController = (req, res, next) => {
 };
 const addAdminController = (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
-  const product = new ProductMongo(title, description, imageUrl, price);
+  const product = new ProductMongo(
+    title,
+    description,
+    imageUrl,
+    price,
+    null,
+    req.user._id
+  );
+  console.log(req.user);
   return product
     .save()
     .then((_) => res.redirect("/admins/products"))

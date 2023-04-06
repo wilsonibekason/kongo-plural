@@ -3,13 +3,13 @@ const mongo = require("mongodb");
 const generateCollectionHook = require("../../hooks/generateCollectionMethod");
 
 class ProductMongo {
-  constructor(title, description, imageUrl, price, id, newId) {
+  constructor(title, description, imageUrl, price, id, userId) {
     this.title = title;
     this.description = description;
     this.imageUrl = imageUrl;
     this.price = price;
     this._id = id ? new mongo.ObjectId(id) : null;
-    this._newId = newId;
+    this._userId = userId;
   }
 
   save() {
@@ -18,7 +18,7 @@ class ProductMongo {
     if (!this._id) {
       dbOp = db
         .collection("products")
-        .updateOne({ _id: new mongo.ObjectId(this._id) }, { $set: this });
+        .updateOne({ _id: this._id }, { $set: this });
     } else {
       dbOp = db.collection("products").insertMany(this);
     }

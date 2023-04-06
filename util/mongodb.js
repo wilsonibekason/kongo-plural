@@ -1,9 +1,11 @@
 const { MongoAWSError, MongoClient, ServerApiVersion } = require("mongodb");
-let uri = `mongodb+srv://nodejs:node--js@nodecomplete.jlakbr7.mongodb.net/?retryWrites=true&w=majority`;
+let uri = `mongodb+srv://nodecomplete:nodecomplete@nodecomplete.fvs3pc0.mongodb.net/test`;
 const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 let __db;
 const connectDB = (cb) =>
-  MongoClient.connect(process.env.MONGOOSE_USER)
+  MongoClient.connect(
+    `mongodb+srv://nodecomplete:nodecomplete@nodecomplete.fvs3pc0.mongodb.net/test`
+  )
     .then((_) => {
       console.log(`DATABASE CONNECTED`);
       __db = _.db() && cb();

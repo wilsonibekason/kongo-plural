@@ -21,22 +21,23 @@ app.use((req, res, next) => {
   return UserMongo.findById(1)
     .then((__) => {
       console.log(__);
-      req.user = user;
+      req.user = __;
+      next();
     })
     .catch((err) => console.log(err));
-  next();
+  // next();
 });
-// connectDB((client) => {
-//   app.listen(3000);
-//   console.log(client);
-// });
+connectDB((client) => {
+  app.listen(8000);
+  console.log(client);
+});
 
-clientConnect
-  .connect((err) => {
-    console.log(err);
-  })
-  .then((res) => {
-    console.log(`Connected ${res}`);
-    app.listen(3000);
-  })
-  .catch((err) => console.log(err));
+// clientConnect
+//   .connect((err) => {
+//     console.log(err);
+//   })
+//   .then((res) => {
+//     console.log(`Connected ${res}`);
+//     app.listen(3000);
+//   })
+//   .catch((err) => console.log(err));
