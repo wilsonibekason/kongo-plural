@@ -118,7 +118,7 @@ const addAdminController = (req, res) => {
   console.log("Response from " + req.users);
   req.users
     .createProduct({ title, imageUrl, description, price })
-    .then(() => res.redirect("/admins/products"))
+    .then(() => res.redirect("/admin/products"))
     .catch((err) => console.log(err));
 };
 

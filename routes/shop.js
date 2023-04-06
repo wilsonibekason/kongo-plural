@@ -16,6 +16,9 @@ const {
   postOrder,
   getNewCart,
 } = require("../controllers/products");
+const {
+  fetchProductsMongo,
+} = require("../controllers/mongo/products.controller.mongo");
 
 const HTML = `<!DOCTYPE html>
 <html>
@@ -73,7 +76,7 @@ const HTML = `<!DOCTYPE html>
 
 router.get("/", getIndex);
 
-router.get("/products", fetchProducts);
+router.get("/products", /*fetchProducts*/ fetchProductsMongo);
 
 router.get("/products/:productId", geProductIndex);
 

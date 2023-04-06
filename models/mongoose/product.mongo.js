@@ -3,28 +3,47 @@ const mongo = require("mongodb");
 const generateCollectionHook = require("../../hooks/generateCollectionMethod");
 
 class ProductMongo {
-  constructor(title, description, imageUrl, price, id, userId) {
+  constructor(title, description, imageUrl, price, id) {
     this.title = title;
     this.description = description;
     this.imageUrl = imageUrl;
     this.price = price;
     this._id = id ? new mongo.ObjectId(id) : null;
-    this._userId = userId;
+    // this._userId = userId;
   }
 
+  // save() {
+  //   let db = getDB();
+  //   let dbOp;
+  //   if (!this._id) {
+  //     dbOp = db
+  //       .collection("products")
+  //       .updateOne({ _id: this._id }, { $set: this });
+  //   } else {
+  //     dbOp = db.collection("products").insertOne(this);
+  //   }
+  //   return dbOp
+  //     .then((res) => console.log("Saved Documents" + res))
+  //     .catch((err) => console.log(err));
+  // }
   save() {
     const db = getDB();
     let dbOp;
-    if (!this._id) {
+    if (this._id) {
+      // Update the product
       dbOp = db
         .collection("products")
         .updateOne({ _id: this._id }, { $set: this });
     } else {
-      dbOp = db.collection("products").insertMany(this);
+      dbOp = db.collection("products").insertOne(this);
     }
     return dbOp
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   static fetchAll() {
@@ -33,7 +52,10 @@ class ProductMongo {
     return generateCollectionHook(db, "products")
       .find()
       .toArray()
-      .then((__) => __)
+      .then((__) => {
+        console.log(__);
+        return __;
+      })
       .catch((err) => console.log(err));
   }
   static findById(prodId) {

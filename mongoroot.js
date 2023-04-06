@@ -17,16 +17,17 @@ const UserMongo = require("./models/mongoose/user.mongo");
 
 app.use(shopRoute);
 app.use(NotFoundRoute);
-app.use((req, res, next) => {
-  return UserMongo.findById(1)
-    .then((__) => {
-      console.log(__);
-      req.user = __;
-      next();
-    })
-    .catch((err) => console.log(err));
-  // next();
+app.use(async (req, res, next) => {
+  try {
+    const user = await UserMongo.findById(1);
+    req.user = user;
+    next();
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
+
 connectDB((client) => {
   app.listen(8000);
   console.log(client);

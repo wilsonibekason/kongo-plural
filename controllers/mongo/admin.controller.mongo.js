@@ -2,7 +2,15 @@ const ProductMongo = require("../../models/mongoose/product.mongo");
 const mongodb = require("mongodb");
 
 const getAdminController = (req, res, next) => {
-  return ProductMongo.fetchAll().then((__) => {});
+  res.render("admin/edit-product", {
+    pageTitle: "Products",
+    path: "/admin/add-product",
+    activeShop: true,
+    activeAddProduct: true,
+    productSS: true,
+    formCSS: true,
+    editing: false,
+  });
 };
 const editAdminController = (req, res, next) => {
   const editMode = req.query.edit;
@@ -48,16 +56,30 @@ const addAdminController = (req, res, next) => {
     description,
     imageUrl,
     price,
-    null,
-    req.user._id
+    null
+    // req.user._id
   );
-  console.log(req.user);
+  console.log("User Response", req.user);
   return product
     .save()
-    .then((_) => res.redirect("/admins/products"))
+    .then((_) => res.redirect("/admin/products"))
     .catch((err) => console.log(err));
 };
-const getAdminProductsController = (req, res, next) => {};
+const getAdminProductsController = (req, res, next) => {
+  return ProductMongo.fetchAll()
+    .then((products) => {
+      res.render("admin/products", {
+        prods: products,
+        pageTitle: "Admin Projects",
+        path: "/admin/products",
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 const deleteProductController = (req, res, next) => {
   const { productId } = req.body;
   return ProductMongo.deleteById(productId)

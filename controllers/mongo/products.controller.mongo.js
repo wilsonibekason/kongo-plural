@@ -2,7 +2,21 @@ const ProductMongo = require("../../models/mongoose/product.mongo");
 
 const getProductsController = (req, res, next) => {};
 const addProductsController = (req, res, next) => {};
-const fetchProductsController = (req, res, next) => {};
+const fetchProductsController = (req, res, next) => {
+  return ProductMongo.fetchAll()
+    .then((products) => {
+      res.render("shop/product-list", {
+        prods: products,
+        pageTitle: "All products",
+        path: "/",
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 const getProductIndexController = (req, res, next) => {
   return ProductMongo.fetchAll()
     .then((__) => {
