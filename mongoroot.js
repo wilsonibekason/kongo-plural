@@ -19,7 +19,7 @@ app.use(shopRoute);
 app.use(NotFoundRoute);
 app.use(async (req, res, next) => {
   try {
-    const user = await UserMongo.findById(1);
+    const user = await UserMongo.findById("642ea531735d317507dc27c8");
     req.user = user;
     next();
   } catch (error) {

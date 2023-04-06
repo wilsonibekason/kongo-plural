@@ -64,7 +64,7 @@ class ProductMongo {
       .find({ _id: prodId })
       .next()
       .then((___) => ___)
-      .catch(err >= console.log(err));
+      .catch((err) => console.log(err));
   }
   static deleteById(prodId) {
     let db = getDB();

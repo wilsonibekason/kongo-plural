@@ -16,6 +16,7 @@ const {
   getAdminMongo,
   getAdminProductsMongo,
   postDeleteProductMongo,
+  postEditAdminMongo,
 } = require("../controllers/mongo/admin.controller.mongo");
 const HTML = `
 <form action='/admin/add-product' method='POST' style='display: flex; flex-direction: column; align-items: center;'>
@@ -29,11 +30,11 @@ router.get("/products", getAdminProductsMongo);
 
 router.post("/add-product", /*addAdmin*/ addAdminMongo);
 
-router.get("/edit-product/:productId", editAdmin);
+router.get("/edit-product/:productId", editAdminMongo);
 
-router.post("/edit-product/:productId", postEditAdmin);
+router.post("/edit-product/:productId", postEditAdminMongo);
 
-router.post("/delete-product", postDeleteProduct);
+router.post("/delete-product", postDeleteProductMongo);
 
 module.exports = router;
 // exports.routes = router;

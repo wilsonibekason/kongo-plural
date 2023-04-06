@@ -17,7 +17,7 @@ const editAdminController = (req, res, next) => {
   if (!editMode) return res.redirect("/");
   const prodId = req.params.productId;
   ProductMongo.findById(prodId)
-    .then(() => {
+    .then((product) => {
       res.render("admin/edit-product", {
         pageTitle: "Edit Products",
         path: " /admin/edit-product",

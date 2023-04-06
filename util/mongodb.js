@@ -7,7 +7,7 @@ const connectDB = (cb) =>
     `mongodb+srv://nodecomplete:nodecomplete@nodecomplete.fvs3pc0.mongodb.net/products?retryWrites=true&w=majority`
   )
     .then((_) => {
-      console.log(`DATABASE CONNECTED`, _);
+      console.log(`DATABASE CONNECTED`);
       __db = _.db();
       cb();
     })
