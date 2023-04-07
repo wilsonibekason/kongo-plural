@@ -12,6 +12,7 @@ class UserMongo {
     this.cart = cart;
     this.id = id;
   }
+
   save() {
     const db = getDB();
     return generateCollectionHook(db, "users")

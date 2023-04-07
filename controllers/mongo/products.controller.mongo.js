@@ -47,7 +47,7 @@ const getIndexController = (req, res, next) => {
 const getCartController = (req, res, next) => {};
 const postCartController = (req, res, next) => {
   const { productId } = req.body;
-  ProductMongo.findById(productId)
+  return ProductMongo.findById(productId)
     .then((product) => {
       return req.user.addToCart(product);
     })

@@ -17,7 +17,7 @@ const editAdminController = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) return res.redirect("/");
   const prodId = req.params.productId;
-  ProductMongo.findById(prodId)
+  return ProductMongo.findById(prodId)
     .then((product) => {
       res.render("admin/edit-product", {
         pageTitle: "Edit Products",
@@ -42,8 +42,8 @@ const postEditAdminController = (req, res, next) => {
     updatedDesc,
     updatedImageUrl,
     updatedPrice,
-    // new mongodb.ObjectId(prodId)
-    prodId
+    prodId,
+    req.user._id
   );
   products
     .save()
