@@ -1,5 +1,6 @@
 const ProductMongo = require("../../models/mongoose/product.mongo");
 const mongodb = require("mongodb");
+const UserMongo = require("../../models/mongoose/user.mongo");
 
 const getAdminController = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -56,8 +57,8 @@ const addAdminController = (req, res, next) => {
     description,
     imageUrl,
     price,
-    null
-    // req.user._id
+    null,
+    req.user._id
   );
   console.log("User Response", req.user);
   return product
@@ -87,6 +88,15 @@ const deleteProductController = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
+const simpleAddProductController = (req, res, next) => {
+  return UserMongo.findById("64302f9f3359962abf2a85ee")
+    .then((user) => {
+      console.log("USER SUCCESSFUL", user);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 module.exports = {
   getAdminMongo: getAdminController,
   addAdminMongo: addAdminController,
@@ -94,4 +104,5 @@ module.exports = {
   editAdminMongo: editAdminController,
   postEditAdminMongo: postEditAdminController,
   postDeleteProductMongo: deleteProductController,
+  simpleMongo: simpleAddProductController,
 };

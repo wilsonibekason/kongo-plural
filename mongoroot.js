@@ -6,27 +6,30 @@ const path = require("path");
 const NotFoundRoute = require("./routes/404");
 require("dotenv").config();
 // console.log(process.env);
+const { clientConnect, connectDB } = require("./util/mongodb");
+const UserMongo = require("./models/mongoose/user.mongo");
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", "views");
-const { clientConnect, connectDB } = require("./util/mongodb");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use("/admin", adminRoutes);
-const UserMongo = require("./models/mongoose/user.mongo");
 
-app.use(shopRoute);
-app.use(NotFoundRoute);
-app.use(async (req, res, next) => {
-  try {
-    const user = await UserMongo.findById("642ea531735d317507dc27c8");
-    req.user = user;
-    next();
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
+app.use((req, res, next) => {
+  return UserMongo.findById("64303be437a9d19e91bee5cc")
+    .then((user) => {
+      req.user = user;
+      console.log("User Response", user, req.user);
+      next();
+    })
+    .catch((error) => {
+      console.log(error);
+      // next(error);
+    });
 });
+app.use("/admin", adminRoutes);
+app.use(shopRoute);
+
+app.use(NotFoundRoute);
 
 connectDB((client) => {
   app.listen(8000);

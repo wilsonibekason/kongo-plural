@@ -15,15 +15,17 @@ class UserMongo {
     return generateCollectionHook(db, "users")
       .insertOne(this)
       .then((__) => __)
-      .catch();
+      .catch((error) => {
+        console.log(error);
+      });
   }
   static findById(userId) {
     const db = getDB();
     return generateCollectionHook(db, "users")
-      .find({ _id: ObjectId(userId) })
-      .then((__) => {
-        console.log(__);
-        return __;
+      .findOne({ _id: new ObjectId(userId) })
+      .then((user) => {
+        console.log("User", user);
+        return user;
       })
       .catch((err) => console.log(err));
   }

@@ -17,6 +17,7 @@ const {
   getAdminProductsMongo,
   postDeleteProductMongo,
   postEditAdminMongo,
+  simpleMongo,
 } = require("../controllers/mongo/admin.controller.mongo");
 const HTML = `
 <form action='/admin/add-product' method='POST' style='display: flex; flex-direction: column; align-items: center;'>

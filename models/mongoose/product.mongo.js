@@ -3,13 +3,13 @@ const mongo = require("mongodb");
 const generateCollectionHook = require("../../hooks/generateCollectionMethod");
 
 class ProductMongo {
-  constructor(title, description, imageUrl, price, id) {
+  constructor(title, description, imageUrl, price, id, userId) {
     this.title = title;
     this.description = description;
     this.imageUrl = imageUrl;
     this.price = price;
     this._id = id ? new mongo.ObjectId(id) : null;
-    // this._userId = userId;
+    this._userId = userId;
   }
 
   // save() {
