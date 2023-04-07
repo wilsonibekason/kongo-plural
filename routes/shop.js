@@ -18,6 +18,8 @@ const {
 } = require("../controllers/products");
 const {
   fetchProductsMongo,
+  postCartMongo,
+  getCartMongo,
 } = require("../controllers/mongo/products.controller.mongo");
 
 const HTML = `<!DOCTYPE html>
@@ -82,7 +84,7 @@ router.get("/products/:productId", geProductIndex);
 
 router.get("/cart", getCart);
 
-router.post("/cart", postCart);
+router.post("/cart", postCartMongo);
 
 router.post("/cart-delete-item", deleteCart);
 

@@ -17,7 +17,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
   return UserMongo.findById("64303be437a9d19e91bee5cc")
     .then((user) => {
-      req.user = user;
+      const { name, email, cart, _id } = user;
+      req.user = new UserMongo(name, email, cart, _id);
       console.log("User Response", user, req.user);
       next();
     })

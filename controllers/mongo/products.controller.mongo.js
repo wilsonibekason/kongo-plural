@@ -45,7 +45,18 @@ const getIndexController = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 const getCartController = (req, res, next) => {};
-const postCartController = (req, res, next) => {};
+const postCartController = (req, res, next) => {
+  const { productId } = req.body;
+  ProductMongo.findById(productId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((res) => {
+      console.log(res);
+      res.redirect("/cart");
+    })
+    .catch((err) => console.log(err));
+};
 const getCheckoutController = (req, res, next) => {};
 const getOrdersControlller = (req, res, next) => {};
 const postOrderController = (req, res, next) => {};
