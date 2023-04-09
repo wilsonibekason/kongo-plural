@@ -21,6 +21,8 @@ const {
   postCartMongo,
   getCartMongo,
   deleteCartMongo,
+  getOrdersMongo,
+  postOrderMongo,
 } = require("../controllers/mongo/products.controller.mongo");
 
 router.get("/", getIndex);
@@ -37,8 +39,8 @@ router.post("/cart-delete-item", deleteCartMongo);
 
 router.get("/checkout", getCheckout);
 
-router.get("/orders", getOrders);
+router.get("/orders", getOrdersMongo);
 
-router.post("/create-order", postOrder);
+router.post("/create-order", postOrderMongo);
 
 module.exports = router;

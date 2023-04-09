@@ -58,7 +58,7 @@ const getCartController = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-const postCartController = (req, res, next) => {
+const postCartController = (req, response, next) => {
   const { productId } = req.body;
   console.log("User Body", req.user);
   return ProductMongo.findById(productId)
@@ -68,19 +68,29 @@ const postCartController = (req, res, next) => {
     })
     .then((res) => {
       console.log(res);
-      res.redirect("/cart");
+      response.redirect("/cart");
     })
     .catch((err) => console.log(err));
 };
 const getCheckoutController = (req, res, next) => {};
 const getOrdersControlller = (req, res, next) => {
-  return req.user.getOrders()
+  return req.user
+    .getOrders()
+    .then((orders) => {
+      res.render("shop/orders", {
+        path: "/orders",
+        pageTitle: "/shop/orders",
+        orders,
+      });
+    })
+    .catch((err) => console.log(err));
 };
 const postOrderController = (req, res, next) => {
   return req.user
     .addOrder()
-    .then((res) => {
+    .then((__) => {
       console.log("PRODUCT ORDERS ADDED SUCCESSFULLY");
+      return res.redirect("/orders");
     })
     .catch((err) => console.log(err));
 };
@@ -88,7 +98,7 @@ const deleteCartController = (req, res, next) => {
   const { productId } = req.body;
   return req.user
     .deleteItemFromCart(productId)
-    .then((res) => {
+    .then((r) => {
       res.redirect("/cart");
     })
     .catch((err) => console.log(err));

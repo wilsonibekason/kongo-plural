@@ -4,12 +4,12 @@
 <body>
 <%- include("../includes/navigation.ejs") %>
 <main>
-    <% if(orders.length <= 0) { %>
+    <% if (orders.length <= 0) { %>
     <h1>Orders</h1>
     <% } else { %>
-<h1><% orders.forEach(order: {orderItems} => {  %> </h1>
-<li><%= order.id %> </li>
-<ul><% order.products.forEach(item: {title, quantity} => {%> 
+<h1><% orders.forEach(order => {  %> </h1>
+<li><%= order._id %> </li>
+<ul><% order.items.forEach(item => {%> 
     <li> <% item.title %>  ( <% item.quantity %>)</li>
 <% )}  %>
 </ul>
