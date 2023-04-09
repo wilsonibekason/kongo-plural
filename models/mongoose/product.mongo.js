@@ -61,7 +61,7 @@ class ProductMongo {
   static findById(prodId) {
     let db = getDB();
     return generateCollectionHook(db, "products")
-      .find({ _id: prodId })
+      .find({ _id: new mongo.ObjectId(prodId) })
       .next()
       .then((___) => ___)
       .catch((err) => console.log(err));

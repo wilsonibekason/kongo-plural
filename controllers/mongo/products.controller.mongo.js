@@ -1,4 +1,5 @@
 const ProductMongo = require("../../models/mongoose/product.mongo");
+const UserMongo = require("../../models/mongoose/user.mongo");
 
 const getProductsController = (req, res, next) => {};
 const addProductsController = (req, res, next) => {};
@@ -44,11 +45,25 @@ const getIndexController = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-const getCartController = (req, res, next) => {};
+const getCartController = (req, res, next) => {
+  return req.user
+    .getCart()
+    .then((cartItems) => {
+      console.log("Cart Items Response", cartItems);
+      return res.render("shop/cart", {
+        path: "/cart",
+        pageTitle: "Cart",
+        products: cartItems,
+      });
+    })
+    .catch((err) => console.log(err));
+};
 const postCartController = (req, res, next) => {
   const { productId } = req.body;
+  console.log("User Body", req.user);
   return ProductMongo.findById(productId)
     .then((product) => {
+      console.log("Selected Cart product", product);
       return req.user.addToCart(product);
     })
     .then((res) => {
@@ -58,9 +73,26 @@ const postCartController = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 const getCheckoutController = (req, res, next) => {};
-const getOrdersControlller = (req, res, next) => {};
-const postOrderController = (req, res, next) => {};
-const deleteCartController = (req, res, next) => {};
+const getOrdersControlller = (req, res, next) => {
+  return req.user.getOrders()
+};
+const postOrderController = (req, res, next) => {
+  return req.user
+    .addOrder()
+    .then((res) => {
+      console.log("PRODUCT ORDERS ADDED SUCCESSFULLY");
+    })
+    .catch((err) => console.log(err));
+};
+const deleteCartController = (req, res, next) => {
+  const { productId } = req.body;
+  return req.user
+    .deleteItemFromCart(productId)
+    .then((res) => {
+      res.redirect("/cart");
+    })
+    .catch((err) => console.log(err));
+};
 
 module.exports = {
   addProductsMongo: addProductsController,

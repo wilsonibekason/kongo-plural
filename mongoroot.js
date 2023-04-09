@@ -17,15 +17,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
   return UserMongo.findById("64303be437a9d19e91bee5cc")
     .then((user) => {
-      const { name, email, cart, _id } = user;
-      req.user = new UserMongo(name, email, cart, _id);
-      console.log("User Response", user, req.user);
+      req.user = new UserMongo(user.username, user.email, user.cart, user._id);
+      console.log("response from user", user);
       next();
     })
-    .catch((error) => {
-      console.log(error);
-      // next(error);
-    });
+    .catch((error) => console.log(error));
 });
 app.use("/admin", adminRoutes);
 app.use(shopRoute);

@@ -19,6 +19,7 @@ const editAdminController = (req, res, next) => {
   const prodId = req.params.productId;
   return ProductMongo.findById(prodId)
     .then((product) => {
+      console.table("Produtc Table", product);
       res.render("admin/edit-product", {
         pageTitle: "Edit Products",
         path: " /admin/edit-product",
