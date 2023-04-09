@@ -1,6 +1,7 @@
 const ProductMongo = require("../../models/mongoose/product.mongo");
 const mongodb = require("mongodb");
 const UserMongo = require("../../models/mongoose/user.mongo");
+const ProductMongoose = require("../../models/mongoose2/product.mongoose");
 
 const getAdminController = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -53,7 +54,7 @@ const postEditAdminController = (req, res, next) => {
 };
 const addAdminController = (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
-  const product = new ProductMongo(
+  const productx = new ProductMongo(
     title,
     description,
     imageUrl,
@@ -61,6 +62,7 @@ const addAdminController = (req, res, next) => {
     null,
     req.user._id
   );
+  const product = new ProductMongoose({ description, imageUrl, price, title });
   console.log("User Response", req.user);
   return product
     .save()
