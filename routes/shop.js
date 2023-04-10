@@ -23,13 +23,15 @@ const {
   deleteCartMongo,
   getOrdersMongo,
   postOrderMongo,
+  getIndexMongo,
+  getProductIndexMongo,
 } = require("../controllers/mongo/products.controller.mongo");
 
 router.get("/", getIndex);
 
 router.get("/products", /*fetchProducts*/ fetchProductsMongo);
 
-router.get("/products/:productId", geProductIndex);
+router.get("/products/:productId", getIndexMongo);
 
 router.get("/cart", getCartMongo);
 

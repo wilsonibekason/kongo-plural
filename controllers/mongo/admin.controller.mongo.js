@@ -54,14 +54,14 @@ const postEditAdminController = (req, res, next) => {
 };
 const addAdminController = (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
-  const productx = new ProductMongo(
-    title,
-    description,
-    imageUrl,
-    price,
-    null,
-    req.user._id
-  );
+  // const productx = new ProductMongo(
+  //   title,
+  //   description,
+  //   imageUrl,
+  //   price,
+  //   null,
+  //   req.user._id
+  // );
   const product = new ProductMongoose({ description, imageUrl, price, title });
   console.log("User Response", req.user);
   return product
@@ -70,7 +70,8 @@ const addAdminController = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 const getAdminProductsController = (req, res, next) => {
-  return ProductMongo.fetchAll()
+  // return ProductMongo.fetchAll()
+  return ProductMongoose.find()
     .then((products) => {
       res.render("admin/products", {
         prods: products,

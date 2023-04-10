@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/admin", adminRoutes);
+app.use(shopRoute);
 app.use(NotFoundRoute);
 
 async function main() {
