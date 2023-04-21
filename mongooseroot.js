@@ -15,6 +15,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/admin", adminRoutes);
 app.use(shopRoute);
 app.use(NotFoundRoute);
+// "mongodb+srv://mongoose:mongoose_db@mongoose.oscayao.mongodb.net/mongoose?retryWrites=true&w=majority"
+//    "mongodb+srv://mongoose:mongoose@mongoose.oscayao.mongodb.net/?retryWrites=true&w=majority"
 
 async function main() {
   await mongoose.connect(
@@ -26,4 +28,4 @@ main()
     console.log("DATABASE CONNECTED", _);
     app.listen(8000);
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("Error Response", err));

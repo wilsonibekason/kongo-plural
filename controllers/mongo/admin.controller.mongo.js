@@ -18,7 +18,7 @@ const editAdminController = (req, res, next) => {
   const editMode = req.query.edit;
   if (!editMode) return res.redirect("/");
   const prodId = req.params.productId;
-  return ProductMongo.findById(prodId)
+  return ProductMongoose.findById(prodId)
     .then((product) => {
       console.table("Produtc Table", product);
       res.render("admin/edit-product", {
@@ -30,6 +30,7 @@ const editAdminController = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
 const postEditAdminController = (req, res, next) => {
   const {
     productId: prodId,
@@ -39,20 +40,28 @@ const postEditAdminController = (req, res, next) => {
     description: updatedDesc,
   } = req.body;
 
-  const products = new ProductMongo(
-    updatedTitle,
-    updatedDesc,
-    updatedImageUrl,
-    updatedPrice,
-    prodId,
-    req.user._id
-  );
-  products
-    .save()
-    .then((_) => res.redirect("/admin/products"))
-    .catch((err) => console.log(err));
+  // const products = new ProductMongo(
+  //   updatedTitle,
+  //   updatedDesc,
+  //   updatedImageUrl,
+  //   updatedPrice,
+  //   prodId,
+  //   req.user._id
+  // );
+  ProductMongoose.findById(prodId),
+    then((product) => {
+      product._id = prodId;
+      product.title = updatedTitle;
+      product.description = updatedDesc;
+      product.imageUrl = updatedImageUrl;
+      product.price = updatedPrice;
+      return product.save();
+    })
+      .then((_) => res.redirect("/admin/products"))
+      .catch((err) => console.log(err));
 };
-const addAdminController = (req, res, next) => {
+
+const addAdminController = async (req, res, next) => {
   const { title, imageUrl, description, price } = req.body;
   // const productx = new ProductMongo(
   //   title,
@@ -64,10 +73,12 @@ const addAdminController = (req, res, next) => {
   // );
   const product = new ProductMongoose({ description, imageUrl, price, title });
   console.log("User Response", req.user);
-  return product
-    .save()
-    .then((_) => res.redirect("/admin/products"))
-    .catch((err) => console.log(err));
+  try {
+    const _ = await product.save();
+    return res.redirect("/admin/products");
+  } catch (err) {
+    return console.log(err);
+  }
 };
 const getAdminProductsController = (req, res, next) => {
   // return ProductMongo.fetchAll()

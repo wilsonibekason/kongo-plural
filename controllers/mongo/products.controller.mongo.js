@@ -40,14 +40,17 @@ const getProductIndexController = async (req, res, next) => {
 };
 const getIndexController = async (req, res, next) => {
   const { productId } = req.body;
+  console.log("Request body response", req.body);
   try {
-    const __pd = await ProductMongoose.findById(productId);
-    console.log("Product Details response", __pd, productId);
-    res.render("shop/product-detail", {
-      product: __pd,
-      pageTitle: __pd && __pd.title,
-      path: `/products`,
-    });
+    await ProductMongoose.findById(productId)
+      .then((__pd) => {
+        return res.render("shop/product-detail", {
+          product: __pd,
+          pageTitle: __pd && __pd.title,
+          path: `/products`,
+        });
+      })
+      .catch((err) => console.log("Error Response", err));
   } catch (err) {
     return console.log(err);
   }
