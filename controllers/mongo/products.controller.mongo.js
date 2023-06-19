@@ -56,21 +56,35 @@ const getIndexController = async (req, res, next) => {
   }
 };
 const getCartController = (req, res, next) => {
+  // return req.user
+  //   .getCart()
+  //   .then((cartItems) => {
+  //     console.log("Cart Items Response", cartItems);
+  //     return res.render("shop/cart", {
+  //       path: "/cart",
+  //       pageTitle: "Cart",
+  //       products: cartItems,
+  //     });
+  //   })
+  //   .catch((err) => console.log(err));
+
   return req.user
-    .getCart()
+    .populate("cart.items.productId")
+    .execPopulate()
     .then((cartItems) => {
       console.log("Cart Items Response", cartItems);
       return res.render("shop/cart", {
         path: "/cart",
         pageTitle: "Cart",
-        products: cartItems,
+        products: cartItems.cart.items,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 };
 const postCartController = (req, response, next) => {
   const { productId } = req.body;
   console.log("User Body", req.user);
+  // return ProductMongo.findById(productId)
   return ProductMongo.findById(productId)
     .then((product) => {
       console.log("Selected Cart product", product);

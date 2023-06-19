@@ -169,6 +169,23 @@ const getAdminProductsController = (req, res, next) => {
       });
     })
     .catch((err) => console.log("Error finding " + serr));
+
+  // MONGOOSE APPROACH
+  Products.find()
+    .populate("userId")
+    .then((prods) => {
+      res.render("admin/products", {
+        prods: prods,
+        pageTitle: "Admin Projects",
+        path: "/admin/products",
+        // hasProducts: products.length > 0,
+        activeShop: true,
+        activeAddProduct: true,
+        productCSS: true,
+        formCSS: true,
+      });
+    })
+    .catch((err) => console.error(err));
 };
 
 const deleteProductController = (req, res, next) => {

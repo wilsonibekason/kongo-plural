@@ -39,3 +39,4 @@ router.post("/delete-product", postDeleteProductMongo);
 
 module.exports = router;
 // exports.routes = router;
+/// i have not written code for a very time, but i thik it is time for that to stop, because i am goinig to dedicate al lot of time t build myself very much to build my self exceptionally well to be in the top nutch industry this year, no matter what it takes, i am going to add my 3000 additional contribution to my repository. I htink it is time tomore free to decide on what to do, and what not ot do, becasue i thibnk  it is something to be very intentional about in this my field

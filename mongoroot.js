@@ -5,6 +5,7 @@ const shopRoute = require("./routes/shop");
 const path = require("path");
 const NotFoundRoute = require("./routes/404");
 const mongoose = require("mongoose");
+const User = require("./models/mongoose/user.model");
 require("dotenv").config();
 // console.log(process.env);
 const { clientConnect, connectDB } = require("./util/mongodb");
@@ -18,7 +19,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
   return UserMongo.findById("64303be437a9d19e91bee5cc")
     .then((user) => {
-      req.user = new UserMongo(user.username, user.email, user.cart, user._id);
+      // req.user = new UserMongo(user.username, user.email, user.cart, user._id);
+      req.user = new User(user.username, user.email, user.cart, user._id);
       console.log("response from user", user);
       next();
     })
@@ -35,6 +37,16 @@ async function main() {
 }
 main()
   .then((_) => {
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          username: "WisonIbekason",
+          email: "Wilsonibekason@gmail.com",
+          cart: { items: [] },
+        });
+        user.save();
+      }
+    });
     console.log("DATABASE CONNECTED", _);
     app.listen(8000);
   })
@@ -55,4 +67,3 @@ main()
 //   })
 //   .catch((err) => console.log(err));
 // i am listening to the callback function on my laptop
-

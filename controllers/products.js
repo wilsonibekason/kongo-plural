@@ -24,14 +24,13 @@ const addProductsController = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
+  const userId = req.user; // you can also run req.user._id
   ////////
   // const products = new Products(title, imageUrl, description, price);
   // products.save();
-  ProductsORM.create({ title, imageUrl, price, description })
+  ProductsORM.create({ title, imageUrl, price, description, userId })
     .then((res) => console.log(`Responsse ${res}`) && res.redirect("/products"))
     .catch((err) => console.log("Err get request" + err));
-
-  /////
 };
 
 const fetchProductsController = (req, res, next) => {
